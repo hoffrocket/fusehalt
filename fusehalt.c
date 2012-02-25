@@ -45,7 +45,7 @@ static void do_halt(void)
 static int xmp_getattr(const char *path, struct stat *stbuf)
 {
     int res;
-
+    do_halt();
     res = lstat(path, stbuf);
     if (res == -1)
         return -errno;
@@ -56,7 +56,7 @@ static int xmp_getattr(const char *path, struct stat *stbuf)
 static int xmp_access(const char *path, int mask)
 {
     int res;
-
+    do_halt();
     res = access(path, mask);
     if (res == -1)
         return -errno;
@@ -67,7 +67,7 @@ static int xmp_access(const char *path, int mask)
 static int xmp_readlink(const char *path, char *buf, size_t size)
 {
     int res;
-
+    do_halt();
     res = readlink(path, buf, size - 1);
     if (res == -1)
         return -errno;
@@ -106,7 +106,7 @@ static int xmp_readdir(const char *path, void *buf, fuse_fill_dir_t filler,
 static int xmp_mknod(const char *path, mode_t mode, dev_t rdev)
 {
     int res;
-
+    do_halt();
     /* On Linux this could just be 'mknod(path, mode, rdev)' but this
        is more portable */
     if (S_ISREG(mode)) {
@@ -242,7 +242,7 @@ static int xmp_utimens(const char *path, const struct timespec ts[2])
 static int xmp_open(const char *path, struct fuse_file_info *fi)
 {
     int res;
-
+    do_halt();
     res = open(path, fi->flags);
     if (res == -1)
         return -errno;
