@@ -371,15 +371,19 @@ void *threadFunc(void *arg)
         FILE *fp;
         char first_char;
         fp = fopen(halt_file, "r");
-        first_char = fgetc( fp );
-        if (fp != NULL && first_char == '1' && halted == 0 ) {
+        if (!fp) {
+          printf("haltfile could not be found at %s\n", halt_file);
+        } else {
+          first_char = fgetc( fp );
+          if (fp != NULL && first_char == '1' && halted == 0 ) {
             puts("fusehalt: halting fs operations");
             halted = 1;
-        } else if ( first_char == '0' && halted == 1) {
+          } else if ( first_char == '0' && halted == 1) {
             puts("fusehalt: unhalting fs operations");
             halted = 0;
+          }
+          fclose( fp );
         }
-        fclose( fp );
         sleep(1);
     }
     puts("fusehalt: child thread exiting");
