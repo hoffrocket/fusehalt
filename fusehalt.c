@@ -1,9 +1,13 @@
 /*
   FUSE: Filesystem in Userspace
-  Copyright (C) 2001-2007  Miklos Szeredi <miklos@szeredi.hu>
+  Original Copyright (C) 2001-2007  Miklos Szeredi <miklos@szeredi.hu>
 
+  This code was adapted from fuse example code to provide
+  switchable blocking on IO operations.
+
+  Halting updates by Jon Hoffman <jonhoffman@gmail.com>
+  
   This program can be distributed under the terms of the GNU GPL.
-  See the file COPYING.
 
   gcc -Wall `pkg-config fuse --cflags --libs` fusehalt.c -o fusehalt
 */
