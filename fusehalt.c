@@ -372,19 +372,19 @@ void *threadFunc(void *arg)
     printf("fusehalt: child thread watching %s\n", halt_file);
     while( not_destroyed ) 
     {
-        FILE *fp;
-        char first_char;
-        fp = fopen(halt_file, "r");
-        if (!fp) {
-          printf("haltfile could not be found at %s\n", halt_file);
+        FILE *fp = fopen(halt_file, "r");
+        if (!fp) 
+        {
+          if (halted == 1) 
+          {
+            puts("fusehalt: unhalting fs operations"); 
+            halted = 0;
+          }
         } else {
-          first_char = fgetc( fp );
-          if (fp != NULL && first_char == '1' && halted == 0 ) {
+          if (halted == 0) 
+          {
             puts("fusehalt: halting fs operations");
             halted = 1;
-          } else if ( first_char == '0' && halted == 1) {
-            puts("fusehalt: unhalting fs operations");
-            halted = 0;
           }
           fclose( fp );
         }

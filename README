@@ -8,9 +8,9 @@ usage:
 ./fusehalt /path/to/mountat /path/to/halt_file -f
 
 to halt IO:
- echo 1 > /path/to/halt_file
+ touch /path/to/halt_file
 
 to unhalt IO:
- echo 0 > /path/to/halt_file
+ rm /path/to/halt_file
 
 unhalt to exit cleanly
